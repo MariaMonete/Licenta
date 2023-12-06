@@ -29,6 +29,17 @@
                 android:layout_width="300dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
+                android:id="@+id/signup_username"
+                android:padding="8dp"
+                android:hint="Nume utilizator"
+                android:drawableLeft="@drawable/baseline_person_outline_24"
+                android:drawablePadding="8dp"
+                android:background="@drawable/edittext_bkg"/>
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
                 android:id="@+id/signup_email"
                 android:layout_marginTop="30dp"
                 android:padding="8dp"
