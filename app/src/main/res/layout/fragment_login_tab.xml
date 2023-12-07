@@ -59,7 +59,21 @@
                 android:id="@+id/login_button"
                 android:textSize="18sp"
                 android:text="Conectare"
+                android:backgroundTint="#BEA3EB"
                 app:cornerRadius = "30dp"/>
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:id="@+id/login_reset_pass"
+                android:layout_marginTop="20dp"
+                android:padding="8dp"
+                android:textAlignment="center"
+                android:text="Ați uitat parola?"
+                android:textColor="#bea3eb"
+                android:textSize="18dp"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 

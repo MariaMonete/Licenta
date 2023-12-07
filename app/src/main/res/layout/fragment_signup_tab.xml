@@ -22,7 +22,8 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
+                android:layout_marginRight="15dp"
                 android:src="@drawable/signimg"/>
 
             <EditText
@@ -82,7 +83,8 @@
                 android:id="@+id/signup_button"
                 android:textSize="18sp"
                 android:text="Înregistrare"
-                app:cornerRadius = "30dp"/>
+                app:cornerRadius = "30dp"
+                android:backgroundTint="#BEA3EB"/>
 
         </LinearLayout>
 

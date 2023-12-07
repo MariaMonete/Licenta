@@ -88,7 +88,7 @@ public class SignupTabFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                if(task.isSuccessful()){
-                   Toast.makeText(view.getContext(),"Inregistrare reusita",Toast.LENGTH_SHORT).show();
+                   Toast.makeText(view.getContext(),"Înregistrare reușita",Toast.LENGTH_SHORT).show();
                    DocumentReference documentReference=fStore.collection("users").document(auth.getCurrentUser().getUid());
                    Map<String,Object> user=new HashMap<>();
                    user.put("Username",username);
@@ -102,7 +102,7 @@ public class SignupTabFragment extends Fragment {
                    getActivity().getFragmentManager().popBackStack();
                }
                else{
-                   Toast.makeText(view.getContext(),"Inregistrare nereusita "+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                   Toast.makeText(view.getContext(),"Înregistrare nereușită "+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                }
             }
         });

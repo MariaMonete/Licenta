@@ -1,6 +1,9 @@
 package com.example.incercarelicenta;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,6 +30,10 @@ public class LoginTabFragment extends Fragment {
     private FirebaseAuth auth;
     private EditText edtLoginEmail, edtLoginPassword;
     private Button loginButton;
+    AlertDialog.Builder resert_alert;
+
+
+    TextView txtResetPass;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,6 +45,15 @@ public class LoginTabFragment extends Fragment {
         edtLoginEmail=view.findViewById(R.id.login_email);
         edtLoginPassword=view.findViewById(R.id.login_password);
         loginButton=view.findViewById(R.id.login_button);
+        txtResetPass=view.findViewById(R.id.login_reset_pass);
+
+        resert_alert = new AlertDialog.Builder(view.getContext());
+        txtResetPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ResetPassword(view,inflater);
+            }
+        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,24 +74,51 @@ public class LoginTabFragment extends Fragment {
                 auth.signInWithEmailAndPassword(email,pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        Toast.makeText(view.getContext(),"Conectare reusita",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(),"Conectare reușită",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(getActivity(), QuizActivity.class));//TODO de schimbat quiz1!!!
                         getActivity().getFragmentManager().popBackStack();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(view.getContext(), "Conectare nereusita", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), "Conectare nereușită", Toast.LENGTH_SHORT).show();
                     }
                 });
             }else{
-                edtLoginPassword.setError("Introduceti parola");
+                edtLoginPassword.setError("Introduceți parola");
             }
         }else if(email.isEmpty()) {
-            edtLoginEmail.setError("Introduceti email-ul");
+            edtLoginEmail.setError("Introduceți email-ul");
         }else{
             edtLoginEmail.setError("Email invalid");
         }
     }
 
+    public void ResetPassword(View view,LayoutInflater inflater) {
+        View view_inflater=inflater.inflate(R.layout.reset_passwird_pop,null);
+        resert_alert.setTitle("Resetare parola").setMessage("Introduceți email-ul pentru a reseta parola")
+                .setPositiveButton("Resetează", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        EditText email = view_inflater.findViewById(R.id.edt_email_reset_password_pop);
+                        if(email.getText().toString().isEmpty()){
+                            email.setError("Introduceți email-ul");
+                            return ;
+                        }
+                        auth.sendPasswordResetEmail(email.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(view.getContext(),"Un email a fost trimis",Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(view.getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
+                }).setNegativeButton("Anulează",null)
+                .setView(view_inflater).create().show();
+    }
 }
