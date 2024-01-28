@@ -1,0 +1,134 @@
+<!-- activity_parfum_details.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ParfumDetailsActivity"
+    android:padding="20dp"
+    android:orientation="vertical"
+    android:background="#dcc7ff">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="170dp"
+        android:layout_height="250dp"
+        app:cardCornerRadius="20dp"
+        android:layout_gravity="center">
+        <ImageView
+            android:id="@+id/imageViewParfum"
+            android:layout_width="170dp"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder_image"/>
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <!-- Numele parfumului -->
+            <TextView
+                android:id="@+id/textViewParfumName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nume Parfum"
+                android:textSize="24sp"
+                android:textColor="#3e2a82"/>
+
+            <!-- Separator -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Titlu pentru brandul parfumului -->
+            <TextView
+                android:id="@+id/textViewParfumBrandTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Brand"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:paddingTop="8dp"/>
+
+            <!-- Brandul parfumului -->
+            <TextView
+                android:id="@+id/textViewParfumBrand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Brand Parfum"
+                android:textSize="20sp"
+                android:textColor="#3e2a82"
+                android:paddingTop="8dp"/>
+
+            <!-- Separator -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Titlu pentru descrierea parfumului -->
+            <TextView
+                android:id="@+id/textViewParfumDescriptionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Descriere"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:paddingTop="8dp"/>
+
+            <!-- Descrierea parfumului -->
+            <TextView
+                android:id="@+id/textViewParfumDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Descriere Parfum"
+                android:textSize="18sp"
+                android:textColor="#3e2a82"
+                android:paddingTop="8dp"/>
+
+            <!-- Separator -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Titlu pentru notele parfumului -->
+            <TextView
+                android:id="@+id/textViewParfumNotesTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Note"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:paddingTop="8dp"/>
+
+            <!-- Notele parfumului -->
+            <TextView
+                android:id="@+id/textViewParfumNotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Note Parfum"
+                android:textSize="18sp"
+                android:textColor="#3e2a82"
+                android:paddingTop="8dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

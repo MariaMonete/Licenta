@@ -1,0 +1,147 @@
+<!-- În fragment_profile.xml -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragmente.ProfileFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <!-- Greeting cu numele utilizatorului -->
+                <TextView
+                    android:id="@+id/userGreetingTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Salut, "
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:paddingLeft="16dp"
+                    android:textColor="#3e2a82"/>
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+
+                    android:textColor="#3e2a82"
+                    />
+            </LinearLayout>
+            <!-- Lista de parfumuri favorite -->
+            <TextView
+                android:id="@+id/favoritePerfumesTitleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Parfumuri favorite"
+                android:textColor="#3e2a82"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:padding="16dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/favoritePerfumesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"/>
+
+            <!-- Lista de sugestii -->
+            <TextView
+                android:id="@+id/suggestionsTitleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sugestii"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:padding="16dp"
+                android:textColor="#3e2a82"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/suggestionsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"/>
+
+            <!-- Lista de dorințe (wishlist) -->
+            <TextView
+                android:id="@+id/wishlistTitleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Wishlist"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:padding="16dp"
+                android:textColor="#3e2a82"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/wishlistRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"/>
+
+            <!-- Lista de note preferate -->
+            <TextView
+                android:id="@+id/favoriteNotesTitleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Note preferate"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:padding="16dp"
+                android:textColor="#3e2a82"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/favoriteNotesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"/>
+
+            <!-- Butonul pentru schimbarea parolei -->
+            <Button
+                android:id="@+id/changePasswordButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Schimbare parolă"
+                android:layout_margin="16dp"/>
+
+            <!-- Butonul pentru deconectare -->
+            <Button
+                android:id="@+id/logoutButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Deconectare"
+                android:layout_margin="16dp"/>
+
+            <!-- Butonul pentru ștergerea contului -->
+            <Button
+                android:id="@+id/deleteAccountButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ștergere cont"
+                android:layout_margin="16dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</FrameLayout>

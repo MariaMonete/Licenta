@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -15,24 +16,30 @@
         android:theme="@style/Theme.IncercareLicenta"
         tools:targetApi="31">
         <activity
-            android:name="SignupTabFragment"/>
-        <activity
-            android:name="LoginTabFragment"/>
-        <activity
-            android:name=".QuizActivity"
+            android:name=".ParfumDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="true"></activity>
-        <activity
-            android:name=".SplashActivity"
-            android:exported="true"
-            android:theme="@style/Theme.IncercareLicenta1">
+            android:name=".HomeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".SignupTabFragment" />
+        <activity android:name=".fragmente.LoginTabFragment" />
+        <activity
+            android:name=".QuizActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.IncercareLicenta1">
+
         </activity>
     </application>
 

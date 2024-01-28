@@ -1,4 +1,4 @@
-package com.example.incercarelicenta;
+package com.example.incercarelicenta.fragmente;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,6 +18,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.incercarelicenta.HomeActivity;
+import com.example.incercarelicenta.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Firebase;
@@ -65,6 +67,15 @@ public class LoginTabFragment extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
+
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+//            startActivity(new Intent(getActivity(), HomeActivity.class));
+//            getActivity().getFragmentManager().popBackStack();
+//        }
+//    }
     public void loginButonPress(View view) {
         String email = edtLoginEmail.getText().toString().trim();
         String pass = edtLoginPassword.getText().toString().trim();
@@ -75,7 +86,7 @@ public class LoginTabFragment extends Fragment {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Toast.makeText(view.getContext(),"Conectare reușită",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getActivity(), QuizActivity.class));//TODO de schimbat quiz1!!!
+                        startActivity(new Intent(getActivity(), HomeActivity.class));
                         getActivity().getFragmentManager().popBackStack();
                     }
                 }).addOnFailureListener(new OnFailureListener() {

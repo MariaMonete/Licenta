@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Acasă"
+        android:icon="@drawable/ic_launcher_home"
+        android:id="@+id/home" />
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Caută după"
+        android:icon="@drawable/ic_launcer_search"
+        android:id="@+id/searchBy"/>
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Profil"
+        android:icon="@drawable/ic_launcher_user"
+        android:id="@+id/profile"/>
+</menu>
