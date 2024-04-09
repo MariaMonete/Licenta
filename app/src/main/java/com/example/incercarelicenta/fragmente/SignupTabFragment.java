@@ -1,4 +1,4 @@
-package com.example.incercarelicenta;
+package com.example.incercarelicenta.fragmente;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.incercarelicenta.QuizActivity;
+import com.example.incercarelicenta.R;
+import com.example.incercarelicenta.clase.Parfum;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -22,7 +25,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -93,6 +99,10 @@ public class SignupTabFragment extends Fragment {
                    Map<String,Object> user=new HashMap<>();
                    user.put("Username",username);
                    user.put("Email",email);
+                   Parfum parfumTest=new Parfum("Odin","00 Auriel Eau de Parfum");
+                   List<Parfum> lista = new ArrayList<>();
+                   //lista.add(parfumTest);
+                   user.put("ListaParfFav", lista);
                    documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                        @Override
                        public void onSuccess(Void unused) {

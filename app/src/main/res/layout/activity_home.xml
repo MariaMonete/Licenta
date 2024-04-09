@@ -8,22 +8,6 @@
     tools:context=".HomeActivity"
     android:background="#dcc7ff">
 
-<!--    <SearchView-->
-<!--        android:id="@+id/searchView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:queryHint="Search..."-->
-<!--        android:layout_margin="8dp"-->
-<!--        android:iconifiedByDefault="false" />-->
-
-<!--    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="8dp"
-        android:clipToPadding="false"
-        android:scrollbars="vertical" />-->
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="0dp"
@@ -42,7 +26,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@color/white"
         app:menu="@menu/bottom_navigation_menu"
+        app:itemTextColor="@color/lavender"
+        android:outlineAmbientShadowColor="@color/lavender"
+        android:outlineSpotShadowColor="@color/lavender"
+        app:itemRippleColor="@color/lavender"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>

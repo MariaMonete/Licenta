@@ -1,4 +1,4 @@
-package com.example.incercarelicenta;
+package com.example.incercarelicenta.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.incercarelicenta.R;
 import com.example.incercarelicenta.clase.Parfum;
 import com.example.incercarelicenta.interfete.RecyclerViewInterface;
 import com.squareup.picasso.Picasso;

@@ -68,14 +68,14 @@ public class LoginTabFragment extends Fragment {
         return view;
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        if(FirebaseAuth.getInstance().getCurrentUser() != null){
-//            startActivity(new Intent(getActivity(), HomeActivity.class));
-//            getActivity().getFragmentManager().popBackStack();
-//        }
-//    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            startActivity(new Intent(getActivity(), HomeActivity.class));
+            getActivity().getFragmentManager().popBackStack();
+        }
+    }
     public void loginButonPress(View view) {
         String email = edtLoginEmail.getText().toString().trim();
         String pass = edtLoginPassword.getText().toString().trim();

@@ -20,6 +20,16 @@
             android:layout_height="250dp"
             android:scaleType="centerCrop"
             android:src="@drawable/placeholder_image"/>
+
+        <ImageButton
+            android:id="@+id/favBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/ic_favorite_border_24"
+            />
     </androidx.cardview.widget.CardView>
 
     <ScrollView

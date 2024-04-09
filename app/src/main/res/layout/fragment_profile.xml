@@ -40,9 +40,7 @@
                     android:textStyle="bold"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
-
-                    android:textColor="#3e2a82"
-                    />
+                    android:textColor="#3e2a82" />
             </LinearLayout>
             <!-- Lista de parfumuri favorite -->
             <TextView
@@ -55,12 +53,12 @@
                 android:textStyle="bold"
                 android:padding="16dp"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/favoritePerfumesRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/favoritePerfumesRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"/>
 
             <!-- Lista de sugestii -->
             <TextView
@@ -75,24 +73,6 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/suggestionsRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"/>
-
-            <!-- Lista de dorințe (wishlist) -->
-            <TextView
-                android:id="@+id/wishlistTitleTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Wishlist"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:padding="16dp"
-                android:textColor="#3e2a82"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/wishlistRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"

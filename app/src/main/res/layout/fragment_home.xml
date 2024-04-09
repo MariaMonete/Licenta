@@ -12,9 +12,10 @@
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Search..."
-        android:outlineAmbientShadowColor="#3e2a82"
-        android:outlineSpotShadowColor="#3e2a82"
+        android:queryHint="Caută..."
+        android:queryBackground="@color/lavanderlight"
+        android:outlineSpotShadowColor="@color/black"
+        android:outlineAmbientShadowColor="@color/black"
         android:layout_margin="8dp"
         android:iconifiedByDefault="false" />
 

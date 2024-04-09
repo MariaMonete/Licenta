@@ -16,7 +16,7 @@ import android.widget.SearchView;
 
 import com.example.incercarelicenta.AddPerfumes;
 import com.example.incercarelicenta.clase.Parfum;
-import com.example.incercarelicenta.ParfumAdapter;
+import com.example.incercarelicenta.adapter.ParfumAdapter;
 import com.example.incercarelicenta.ParfumDetailsActivity;
 import com.example.incercarelicenta.R;
 import com.example.incercarelicenta.interfete.RecyclerViewInterface;
