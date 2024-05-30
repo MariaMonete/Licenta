@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 // Cod existent...
 
 // Cod existent...
@@ -53,6 +55,8 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
     private ParfumAdapter recommendedPerfumeAdapter1;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
+    private List<Parfum> favPerfumes = new ArrayList<Parfum>();
+    private TextView parfRec, parfQuiz;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,9 +67,7 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
         // Initializează Python
         if (!Python.isStarted()) {
             Python.start(new AndroidPlatform(getActivity()));
-            Toast.makeText(getContext(), "Python initialized", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getContext(), "Python already initialized", Toast.LENGTH_SHORT).show();
         }
 
         copyAssetsToPythonDir();
@@ -75,6 +77,11 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sugestii, container, false);
+
+        parfRec=view.findViewById(R.id.parfRec);
+        parfQuiz=view.findViewById(R.id.parfQuiz);
+        parfQuiz.setVisibility(View.INVISIBLE);
+        parfRec.setVisibility(View.INVISIBLE);
 
         recommendedPerfumesRecyclerView = view.findViewById(R.id.recommendedPerfumesRecyclerView);
         recommendedPerfumesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -90,7 +97,6 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
 
         loadFavoriteNotesAndRecommendPerfumes();
         loadFavoritePerfumesAndRecommendPerfumes();
-
         return view;
     }
 
@@ -135,32 +141,47 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
                     fetchRecommendedPerfumes(favoriteNotes);
                 } else {
                     Log.d("SugestiiFragment", "No favorite notes found.");
-                    Toast.makeText(getContext(), "No favorite notes found.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "No favorite notes found.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     private void loadFavoritePerfumesAndRecommendPerfumes() {
-        Toast.makeText(getContext(), "Fetching favorite perfumes...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Încărcare parfumuri recomandate...", Toast.LENGTH_SHORT).show();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference userRef = db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
         userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 com.example.incercarelicenta.clase.User user = documentSnapshot.toObject(com.example.incercarelicenta.clase.User.class);
-                if (user != null && user.getListaParfFav() != null) {
+                if (user != null && user.getListaParfFav() != null && !user.getListaParfFav().isEmpty()) {
                     List<Parfum> favoritePerfumes = user.getListaParfFav();
+                    favPerfumes = favoritePerfumes;
                     List<String> favoriteNotes = extractNotesFromPerfumes(favoritePerfumes);
                     Log.d("SugestiiFragment", "Favorite Notes from Perfumes: " + favoriteNotes.toString());
                     fetchRecommendedPerfumesFromPython(favoriteNotes); // Directly use favoriteNotes
+                    recommendedPerfumesRecyclerView1.setVisibility(View.VISIBLE);
+                    recommendedPerfumesRecyclerView.setVisibility(View.GONE);
+                    parfQuiz.setVisibility(View.GONE);
+                    parfRec.setVisibility(View.VISIBLE);
                 } else {
-                    Log.d("SugestiiFragment", "No favorite perfumes found.");
-                    Toast.makeText(getContext(), "No favorite perfumes found.", Toast.LENGTH_SHORT).show();
+                    Log.d("SugestiiFragment", "No favorite perfumes found. Loading quiz recommendations.");
+                    loadFavoriteNotesAndRecommendPerfumes();
+                    recommendedPerfumesRecyclerView1.setVisibility(View.GONE);
+                    recommendedPerfumesRecyclerView.setVisibility(View.VISIBLE);
+                    parfRec.setVisibility(View.GONE);
+                    parfQuiz.setVisibility(View.VISIBLE);
                 }
             }
+        }).addOnFailureListener(e -> {
+            Log.e("SugestiiFragment", "Failed to load user's favorite perfumes", e);
+            loadFavoriteNotesAndRecommendPerfumes(); // Încărcare fallback pe recomandări bazate pe quiz
+            recommendedPerfumesRecyclerView1.setVisibility(View.GONE);
+            recommendedPerfumesRecyclerView.setVisibility(View.VISIBLE);
         });
     }
+
 
     private List<String> extractNotesFromPerfumes(List<Parfum> favoritePerfumes) {
         Set<String> favoriteNotes = new HashSet<>();
@@ -191,17 +212,16 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
                             }
                             recommendedPerfumeAdapter.notifyDataSetChanged();
                             Log.d("SugestiiFragment", "Recommended Perfumes: " + recommendedPerfumesList.size());
-                            Toast.makeText(getContext(), "Found " + recommendedPerfumesList.size() + " perfumes", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), "Found " + recommendedPerfumesList.size() + " perfumes", Toast.LENGTH_SHORT).show();
                         } else {
                             Log.d("SugestiiFragment", "Failed to fetch recommendations.");
-                            Toast.makeText(getContext(), "Failed to fetch recommendations", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), "Failed to fetch recommendations", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
     }
 
     private void fetchRecommendedPerfumesFromPython(List<String> favoriteNotes) {
-        Toast.makeText(getContext(), "Fetching recommended perfumes from Python...", Toast.LENGTH_SHORT).show();
         try {
             Python py = Python.getInstance();
             PyObject pyobj = py.getModule("recommendations");
@@ -212,7 +232,7 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
             PyObject recommendations = pyobj.callAttr("get_recommendations", pyFavoriteNotes);
 
             if (recommendations == null) {
-                Toast.makeText(getContext(), "Python recommendations returned null", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Python recommendations returned null", Toast.LENGTH_SHORT).show();
                 Log.e("SugestiiFragment", "Python recommendations returned null");
                 return;
             }
@@ -222,10 +242,10 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
                 recommendedIndices = recommendations.asList().stream()
                         .map(pyObject -> pyObject.toInt())
                         .collect(Collectors.toList());
-                Toast.makeText(getContext(), "Python recommended indices: " + recommendedIndices.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Python recommended indices: " + recommendedIndices.toString(), Toast.LENGTH_SHORT).show();
                 Log.d("SugestiiFragment", "Python recommended indices: " + recommendedIndices.toString());
             } else {
-                Toast.makeText(getContext(), "Android version not supported for streams", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Android version not supported for streams", Toast.LENGTH_SHORT).show();
                 Log.e("SugestiiFragment", "Android version not supported for streams");
             }
 
@@ -233,36 +253,37 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
             Set<String> processedPerfumeIds = new HashSet<>();
 
             for (int index : recommendedIndices) {
-                db.collection("perfumes").whereEqualTo("index", index) // Assuming you have an "index" field in your Firestore documents
+                db.collection("perfumes").whereEqualTo("index", index)
                         .get().addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 for (DocumentSnapshot document : task.getResult()) {
                                     Parfum parfum = document.toObject(Parfum.class);
-                                    if (parfum != null && !processedPerfumeIds.contains(parfum.getName())) {
+                                    if (parfum != null && !processedPerfumeIds.contains(parfum.getName())&&!favPerfumes.contains(parfum.getName())) {
                                         recommendedPerfumesList1.add(parfum);
                                         processedPerfumeIds.add(parfum.getName());
-                                        Toast.makeText(getContext(), "Added perfume from Python: " + parfum.getName(), Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(getContext(), "Added perfume from Python: " + parfum.getName(), Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(getContext(), "Python perfume already processed or null", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(getContext(), "Python perfume already processed or null", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                                 recommendedPerfumeAdapter1.notifyDataSetChanged();
                                 Log.d("SugestiiFragment", "Python Recommended Perfumes: " + recommendedPerfumesList1.size());
-                                Toast.makeText(getContext(), "Found " + recommendedPerfumesList1.size() + " perfumes from Python", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getContext(), "Found " + recommendedPerfumesList1.size() + " perfumes from Python", Toast.LENGTH_SHORT).show();
                             } else {
                                 Log.d("SugestiiFragment", "Failed to fetch Python recommendations.");
-                                Toast.makeText(getContext(), "Failed to fetch Python recommendations", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getContext(), "Failed to fetch Python recommendations", Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(e -> {
-                            Toast.makeText(getContext(), "Failed to fetch Python perfume with index: " + index + " Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), "Failed to fetch Python perfume with index: " + index + " Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             Log.e("SugestiiFragment", "Failed to fetch Python perfume with index: " + index, e);
                         });
             }
         } catch (Exception e) {
-            Toast.makeText(getContext(), "Error fetching Python recommendations: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Error fetching Python recommendations: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             Log.e("SugestiiFragment", "Error fetching Python recommendations", e);
         }
     }
+
 
 
     private String normalizeText(String text) {
@@ -275,15 +296,28 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
 
     @Override
     public void onItemClick(int position) {
-        Parfum clickedParfum = recommendedPerfumesList.get(position);
-        Intent intent = new Intent(requireContext(), ParfumDetailsActivity.class);
+        Parfum clickedParfum = null;
+        if (!favPerfumes.isEmpty()) {
+            // Verifică dacă click-ul a venit de la lista bazată pe favorite
+            clickedParfum = recommendedPerfumesList1.get(position);
+        } else {
+            // Altfel, utilizatorul interacționează cu lista de recomandări din quiz
+            clickedParfum = recommendedPerfumesList.get(position);
+        }
 
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("parfum", clickedParfum);
-        intent.putExtras(bundle);
-
-        startActivity(intent);
+        if (clickedParfum != null) {
+            Intent intent = new Intent(requireContext(), ParfumDetailsActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("parfum", clickedParfum);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        } else {
+            // Afișează un mesaj de eroare dacă nu există un parfum valid
+            Toast.makeText(getContext(), "Parfumul selectat nu este disponibil.", Toast.LENGTH_SHORT).show();
+        }
     }
+
+
 }
 
 

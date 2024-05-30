@@ -5,9 +5,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.incercarelicenta.adapter.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,6 +58,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//
+//        db.collection("perfumes").get().addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                int index = 0;
+//                for (DocumentSnapshot document : task.getResult()) {
+//                    DocumentReference docRef = db.collection("perfumes").document(document.getId());
+//                    docRef.update("index", index)
+//                            .addOnSuccessListener(aVoid -> Log.d("UpdateIndex", "DocumentSnapshot successfully updated!"))
+//                            .addOnFailureListener(e -> Log.w("UpdateIndex", "Error updating document", e));
+//                    index++;
+//                }
+//            } else {
+//                Log.w("UpdateIndex", "Error getting documents.", task.getException());
+//            }
+//        });
 
 
     }
