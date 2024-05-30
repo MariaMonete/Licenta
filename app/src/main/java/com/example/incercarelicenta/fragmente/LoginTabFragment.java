@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.incercarelicenta.HomeActivity;
+import com.example.incercarelicenta.QuizActivity;
 import com.example.incercarelicenta.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -86,7 +87,7 @@ public class LoginTabFragment extends Fragment {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Toast.makeText(view.getContext(),"Conectare reușită",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getActivity(), HomeActivity.class));
+                        startActivity(new Intent(getActivity(), QuizActivity.class));
                         getActivity().getFragmentManager().popBackStack();
                     }
                 }).addOnFailureListener(new OnFailureListener() {

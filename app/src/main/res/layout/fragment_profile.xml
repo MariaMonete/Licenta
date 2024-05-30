@@ -78,23 +78,6 @@
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"/>
 
-            <!-- Lista de note preferate -->
-            <TextView
-                android:id="@+id/favoriteNotesTitleTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Note preferate"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:padding="16dp"
-                android:textColor="#3e2a82"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/favoriteNotesRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"/>
 
             <!-- Butonul pentru schimbarea parolei -->
             <Button

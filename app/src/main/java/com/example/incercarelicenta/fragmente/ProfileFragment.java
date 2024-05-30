@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // În ProfileFragment.java
-public class ProfileFragment extends Fragment implements RecyclerViewInterface{
+public class ProfileFragment extends Fragment implements RecyclerViewInterface {
 
     private TextView tvNumeUtilizator;
     private FirebaseFirestore db;
@@ -77,7 +77,10 @@ public class ProfileFragment extends Fragment implements RecyclerViewInterface{
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
-                    String username = documentSnapshot.getString("Username");
+
+                    String username = documentSnapshot.getString("username");
+                    if(username==null){
+                    }
                     tvNumeUtilizator.setText(username);
                 }
                 else{
@@ -91,7 +94,7 @@ public class ProfileFragment extends Fragment implements RecyclerViewInterface{
         tvSchimbareParola.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // startActivity(new Intent(view.getContext(), ResetParola.class));
+                // startActivity(new Intent(view.getContext(), ResetParola.class));
             }
         });
 

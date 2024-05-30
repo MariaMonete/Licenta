@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.incercarelicenta.R;
-import com.example.incercarelicenta.clase.Categorii;
+import com.example.incercarelicenta.clase.Categorie;
 import com.example.incercarelicenta.interfete.RecyclerViewInterfaceString;
 
 import java.util.List;
@@ -24,10 +24,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Parent
             viewPool
             = new RecyclerView
             .RecycledViewPool();
-    private List<Categorii> itemList;
+    private List<Categorie> itemList;
     private final Map<String, Integer> categoryImageMap;
 
-    public CategoryAdapter(RecyclerViewInterfaceString recyclerViewInterface, List<Categorii> itemList, Map<String, Integer> categoryImageMap)
+    public CategoryAdapter(RecyclerViewInterfaceString recyclerViewInterface, List<Categorie> itemList, Map<String, Integer> categoryImageMap)
     {
         this.recyclerViewInterface = recyclerViewInterface;
         this.itemList = itemList;
@@ -49,7 +49,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Parent
     @Override
     public void onBindViewHolder(@NonNull ParentViewHolder holder, int position) {
 
-        Categorii categorii = itemList.get(position);
+        Categorie categorii = itemList.get(position);
 
 
 

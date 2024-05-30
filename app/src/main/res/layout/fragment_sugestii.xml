@@ -1,0 +1,39 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragmente.SugestiiFragment">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/parfRec"
+            android:text="Parfumuri recomandate pe baza listei de favorite"
+            android:layout_margin="16dp"
+            android:textSize="20dp"
+            android:textColor="#3e2a82"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recommendedPerfumesRecyclerView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/parfQuiz"
+            android:text="Parfumuri recomandate pe baza quiz-ului"
+            android:layout_margin="16dp"
+            android:textSize="20dp"
+            android:textColor="#3e2a82"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recommendedPerfumesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"/>
+
+    </LinearLayout>
+
+</FrameLayout>

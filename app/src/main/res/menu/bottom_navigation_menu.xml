@@ -17,6 +17,14 @@
     <item
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:title="Sugestii"
+        android:icon="@drawable/ic_suggestions"
+        android:iconTint="@color/lavender"
+        android:iconTintMode="add"
+        android:id="@+id/sugestii"/>
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:title="Profil"
         android:icon="@drawable/ic_launcher_user"
         android:iconTint="@color/lavender"

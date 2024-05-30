@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:gravity="center"
+    android:background="@drawable/selected_background">
+
+    <ImageView
+        android:id="@+id/optionImageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        android:id="@+id/optionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Option"
+        android:textColor="#3e2a82"
+        android:textAlignment="center"/>
+</LinearLayout>
