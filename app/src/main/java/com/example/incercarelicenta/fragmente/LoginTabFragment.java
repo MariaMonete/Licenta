@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.InputType;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.example.incercarelicenta.HomeActivity;
 import com.example.incercarelicenta.QuizActivity;
@@ -34,6 +36,7 @@ public class LoginTabFragment extends Fragment {
     private EditText edtLoginEmail, edtLoginPassword;
     private Button loginButton;
     AlertDialog.Builder resert_alert;
+    ToggleButton toggle;
 
 
     TextView txtResetPass;
@@ -51,6 +54,17 @@ public class LoginTabFragment extends Fragment {
         txtResetPass=view.findViewById(R.id.login_reset_pass);
 
         resert_alert = new AlertDialog.Builder(view.getContext());
+        toggle = view.findViewById(R.id.toggle_password_visibility);
+        EditText passwordEditText = view.findViewById(R.id.login_password);
+        toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                passwordEditText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            } else {
+                passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            }
+            passwordEditText.setSelection(passwordEditText.getText().length());
+        });
+
         txtResetPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,7 +86,8 @@ public class LoginTabFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+        if(FirebaseAuth.getInstance().getCurrentUser()!= null){
+            //Toast.makeText(getContext(),FirebaseAuth.getInstance().getCurrentUser().toString(),Toast.LENGTH_SHORT).show();
             startActivity(new Intent(getActivity(), HomeActivity.class));
             getActivity().getFragmentManager().popBackStack();
         }
@@ -87,7 +102,7 @@ public class LoginTabFragment extends Fragment {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Toast.makeText(view.getContext(),"Conectare reușită",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getActivity(), QuizActivity.class));
+                        startActivity(new Intent(getActivity(), HomeActivity.class));
                         getActivity().getFragmentManager().popBackStack();
                     }
                 }).addOnFailureListener(new OnFailureListener() {

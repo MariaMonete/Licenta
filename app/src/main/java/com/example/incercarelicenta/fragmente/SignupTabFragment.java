@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.InputType;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.example.incercarelicenta.QuizActivity;
 import com.example.incercarelicenta.R;
@@ -37,6 +39,8 @@ public class SignupTabFragment extends Fragment {
     FirebaseFirestore fStore;
     EditText signUpUsername, signUpEmail,signUpPassword,signUpConfirmPass;
     Button signUpButton;
+    ToggleButton toggle;
+    EditText passwordEditText;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,6 +51,19 @@ public class SignupTabFragment extends Fragment {
         signUpPassword=view.findViewById(R.id.signup_password);
         signUpConfirmPass=view.findViewById(R.id.signup_confirm);
         signUpButton=view.findViewById(R.id.signup_button);
+        toggle = view.findViewById(R.id.toggle_password_visibility1);
+        toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                signUpPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                signUpConfirmPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            } else {
+                signUpPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                signUpConfirmPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            }
+            signUpPassword.setSelection(signUpPassword.getText().length());
+            signUpConfirmPass.setSelection(signUpConfirmPass.getText().length());
+        });
+
 
         auth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
@@ -58,7 +75,6 @@ public class SignupTabFragment extends Fragment {
             }
         });
 
-        // Inflate the layout for this fragment
         return view;
     }
 

@@ -3,21 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragmente.HomeFragment">
+    tools:context=".fragmente.HomeFragment"
+    android:background="#e8dcfc">
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
     <SearchView
         android:id="@+id/searchView"
+        style="@style/SearchViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:iconifiedByDefault="false"
         android:queryHint="Caută..."
-        android:queryBackground="@color/lavanderlight"
-        android:outlineSpotShadowColor="@color/black"
-        android:outlineAmbientShadowColor="@color/black"
-        android:layout_margin="8dp"
-        android:iconifiedByDefault="false" />
+        android:textColorHint="@color/mov" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

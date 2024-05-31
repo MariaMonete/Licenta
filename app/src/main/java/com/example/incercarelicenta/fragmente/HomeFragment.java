@@ -1,5 +1,6 @@
 package com.example.incercarelicenta.fragmente;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -45,6 +46,7 @@ public class HomeFragment extends Fragment implements RecyclerViewInterface {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,6 +63,7 @@ public class HomeFragment extends Fragment implements RecyclerViewInterface {
         recyclerView.setAdapter(adapter);
 
         searchView = view.findViewById(R.id.searchView); // Folosim referința la view pentru a găsi SearchView
+        searchView.setDrawingCacheBackgroundColor(R.color.mov);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

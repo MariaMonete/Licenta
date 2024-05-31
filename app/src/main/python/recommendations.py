@@ -14,7 +14,9 @@ knn = load_asset('knn_model.pkl')
 note_index = load_asset('note_index.pkl')
 print("Loaded KNN model and note index")
 
-def notes_to_vector(notes, note_index):
+def notes_to_vector(notes, note_index, max_notes=10):
+    # Limitează numărul de note la max_notes
+    notes = notes[:max_notes]
     vector = np.zeros(len(note_index))
     for note in notes:
         if note in note_index:

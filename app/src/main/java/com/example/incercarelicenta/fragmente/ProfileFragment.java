@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,7 @@ import com.example.incercarelicenta.R;
 import com.example.incercarelicenta.adapter.ParfumAdapter;
 import com.example.incercarelicenta.clase.Parfum;
 import com.example.incercarelicenta.interfete.RecyclerViewInterface;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -101,34 +103,53 @@ public class ProfileFragment extends Fragment implements RecyclerViewInterface {
         tvStergeCont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stergeCont.setTitle("Stergere cont").setMessage("Doriti sa stergeti contul?")
-                        .setPositiveButton("Sterge", new DialogInterface.OnClickListener() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Ștergere cont")
+                        .setMessage("Doriți să ștergeți contul?")
+                        .setPositiveButton("Șterge", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                String idUtilizator = auth.getCurrentUser().getUid();
-                                DocumentReference documentReference1 = FirebaseFirestore.getInstance().collection("users").document(idUtilizator);
-                                documentReference1.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                    }
-                                });
-                                FirebaseUser userAcum = auth.getCurrentUser();
-                                auth.signOut();
-                                userAcum.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        Toast.makeText(view.getContext(), "Utilizatorul a fost sters", Toast.LENGTH_SHORT).show();
-                                        auth.signOut();
-                                        startActivity(new Intent(ProfileFragment.this.getActivity(), MainActivity.class));
-                                        getActivity().finish();
-                                    }
-                                });
-
+                                final FirebaseUser user = auth.getCurrentUser();
+                                if (user != null) {
+                                    // Stergere document din Firestore
+                                    FirebaseFirestore.getInstance().collection("users")
+                                            .document(user.getUid())
+                                            .delete()
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    // Stergere utilizator din Firebase Auth
+                                                    user.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Toast.makeText(getContext(), "Utilizatorul a fost șters", Toast.LENGTH_SHORT).show();
+                                                            startActivity(new Intent(getActivity(), MainActivity.class));
+                                                            getActivity().finish();
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Toast.makeText(getContext(), "Eroare la ștergerea utilizatorului: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(getContext(), "Eroare la ștergerea documentului utilizatorului: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                } else {
+                                    Toast.makeText(getContext(), "Niciun utilizator autentificat", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }).setNegativeButton("Anuleaza",null)
-                        .create().show();
+                        })
+                        .setNegativeButton("Anulează", null)
+                        .show();
             }
         });
+
         tvDeconectare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

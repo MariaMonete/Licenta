@@ -156,11 +156,12 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 com.example.incercarelicenta.clase.User user = documentSnapshot.toObject(com.example.incercarelicenta.clase.User.class);
                 if (user != null && user.getListaParfFav() != null && !user.getListaParfFav().isEmpty()) {
+                    Set<String> favoriteNames = extractNamesFromPerfumes(user.getListaParfFav());
                     List<Parfum> favoritePerfumes = user.getListaParfFav();
                     favPerfumes = favoritePerfumes;
                     List<String> favoriteNotes = extractNotesFromPerfumes(favoritePerfumes);
                     Log.d("SugestiiFragment", "Favorite Notes from Perfumes: " + favoriteNotes.toString());
-                    fetchRecommendedPerfumesFromPython(favoriteNotes); // Directly use favoriteNotes
+                    fetchRecommendedPerfumesFromPython(favoriteNotes, favoriteNames); // Directly use favoriteNotes
                     recommendedPerfumesRecyclerView1.setVisibility(View.VISIBLE);
                     recommendedPerfumesRecyclerView.setVisibility(View.GONE);
                     parfQuiz.setVisibility(View.GONE);
@@ -180,6 +181,13 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
             recommendedPerfumesRecyclerView1.setVisibility(View.GONE);
             recommendedPerfumesRecyclerView.setVisibility(View.VISIBLE);
         });
+    }
+    private Set<String> extractNamesFromPerfumes(List<Parfum> favoritePerfumes) {
+        Set<String> favoriteNames = new HashSet<>();
+        for (Parfum parfum : favoritePerfumes) {
+            favoriteNames.add(parfum.getName());
+        }
+        return favoriteNames;
     }
 
 
@@ -221,12 +229,11 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
         }
     }
 
-    private void fetchRecommendedPerfumesFromPython(List<String> favoriteNotes) {
+    private void fetchRecommendedPerfumesFromPython(List<String> favoriteNotes, Set<String>favoriteNames) {
         try {
             Python py = Python.getInstance();
             PyObject pyobj = py.getModule("recommendations");
 
-            // Convertim List<String> în PyObject
             PyObject pyFavoriteNotes = PyObject.fromJava(favoriteNotes.toArray(new String[0]));
 
             PyObject recommendations = pyobj.callAttr("get_recommendations", pyFavoriteNotes);
@@ -258,7 +265,7 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
                             if (task.isSuccessful()) {
                                 for (DocumentSnapshot document : task.getResult()) {
                                     Parfum parfum = document.toObject(Parfum.class);
-                                    if (parfum != null && !processedPerfumeIds.contains(parfum.getName())&&!favPerfumes.contains(parfum.getName())) {
+                                    if (parfum != null && !processedPerfumeIds.contains(parfum.getName())&&!favPerfumes.contains(parfum.getName()) && !favoriteNames.contains(parfum.getName())) {
                                         recommendedPerfumesList1.add(parfum);
                                         processedPerfumeIds.add(parfum.getName());
                                         //Toast.makeText(getContext(), "Added perfume from Python: " + parfum.getName(), Toast.LENGTH_SHORT).show();
@@ -298,10 +305,8 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
     public void onItemClick(int position) {
         Parfum clickedParfum = null;
         if (!favPerfumes.isEmpty()) {
-            // Verifică dacă click-ul a venit de la lista bazată pe favorite
             clickedParfum = recommendedPerfumesList1.get(position);
         } else {
-            // Altfel, utilizatorul interacționează cu lista de recomandări din quiz
             clickedParfum = recommendedPerfumesList.get(position);
         }
 

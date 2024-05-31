@@ -268,7 +268,7 @@ public class QuizActivity extends AppCompatActivity implements RecyclerViewInter
                     userRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            Toast.makeText(getApplicationContext(), "Quzi adaugat la user", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), "Quzi adaugat la user", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

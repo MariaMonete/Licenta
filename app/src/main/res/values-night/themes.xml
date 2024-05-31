@@ -7,5 +7,9 @@
 
     <style name="Theme.IncercareLicenta1" parent="Base.Theme.IncercareLicenta" >
 
+
        </style>
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColorHint">@color/mov</item>
+    </style>
 </resources>
