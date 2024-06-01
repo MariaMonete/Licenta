@@ -6,6 +6,16 @@
     android:orientation="vertical"
     tools:context=".ParfumByNotaActivity"
     android:background="#e8dcfc">
+    <Button
+        android:backgroundTint="@color/mov"
+        android:backgroundTintMode="src_in"
+        android:textColor="@color/white"
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Înapoi"
+        android:layout_alignParentStart="true"
+        android:layout_margin="10dp" />
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:id="@+id/recyclerViewParfumByNota"

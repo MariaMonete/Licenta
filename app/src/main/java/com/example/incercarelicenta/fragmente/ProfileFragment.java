@@ -1,11 +1,13 @@
 package com.example.incercarelicenta.fragmente;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,34 +21,39 @@ import android.widget.Toast;
 import com.example.incercarelicenta.MainActivity;
 import com.example.incercarelicenta.ParfumDetailsActivity;
 import com.example.incercarelicenta.R;
+import com.example.incercarelicenta.ResetEmail;
+import com.example.incercarelicenta.ResetNume;
+import com.example.incercarelicenta.ResetParola;
 import com.example.incercarelicenta.adapter.ParfumAdapter;
 import com.example.incercarelicenta.clase.Parfum;
+import com.example.incercarelicenta.clase.User;
 import com.example.incercarelicenta.interfete.RecyclerViewInterface;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.auth.User;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// În ProfileFragment.java
 public class ProfileFragment extends Fragment implements RecyclerViewInterface {
 
-    private TextView tvNumeUtilizator;
+    private TextView tvNumeUtilizator, tvEmail, tvNume;
     private FirebaseFirestore db;
-    FirebaseAuth auth;
+    private FirebaseAuth auth;
     public User user;
-    TextView tvSchimbareParola,tvStergeCont;
-    TextView tvDeconectare;
-    AlertDialog.Builder stergeCont;
+    private TextView tvSchimbareParola, tvStergeCont, tvDeconectare;
+    private AlertDialog.Builder stergeCont;
     private RecyclerView favoritePerfumesRecyclerView;
     private List<Parfum> favoritePerfumesList;
     private ParfumAdapter favoritePerfumeAdapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,17 +61,20 @@ public class ProfileFragment extends Fragment implements RecyclerViewInterface {
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
     }
+
+    @SuppressLint("MissingInflatedId")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         stergeCont = new AlertDialog.Builder(view.getContext());
-        tvNumeUtilizator=view.findViewById(R.id.userName);
-        tvSchimbareParola=view.findViewById(R.id.changePasswordButton);
-        tvStergeCont=view.findViewById(R.id.deleteAccountButton);
-        tvDeconectare=view.findViewById(R.id.logoutButton);
+        tvNumeUtilizator = view.findViewById(R.id.userName);
+        tvSchimbareParola = view.findViewById(R.id.changePasswordButton);
+        tvStergeCont = view.findViewById(R.id.deleteAccountButton);
+        tvDeconectare = view.findViewById(R.id.logoutButton);
+        tvEmail = view.findViewById(R.id.changeEmailButton);
+        tvNume = view.findViewById(R.id.tv_nume);
 
         favoritePerfumesRecyclerView = view.findViewById(R.id.favoritePerfumesRecyclerView);
         favoritePerfumesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -75,28 +85,44 @@ public class ProfileFragment extends Fragment implements RecyclerViewInterface {
 
         loadFavoritePerfumes();
         DocumentReference documentReference = db.collection("users").document(auth.getCurrentUser().getUid());
-        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()) {
-
-                    String username = documentSnapshot.getString("username");
-                    if(username==null){
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null && value.exists()) {
+                    user = value.toObject(User.class);
+                    if (user != null) {
+                        tvNumeUtilizator.setText(user.getUsername());
                     }
-                    tvNumeUtilizator.setText(username);
-                }
-                else{
-                    tvNumeUtilizator.setText("user");
                 }
             }
         });
 
+        tvNume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), ResetNume.class);
+                if (user != null) {
+                    intent.putExtra("nume", user.getUsername());
+                }
+                startActivity(intent);
+            }
+        });
 
+        tvEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (user != null) {
+                    Intent intent = new Intent(view.getContext(), ResetEmail.class);
+                    intent.putExtra("email", user.getEmail());
+                    startActivity(intent);
+                }
+            }
+        });
 
         tvSchimbareParola.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // startActivity(new Intent(view.getContext(), ResetParola.class));
+                startActivity(new Intent(view.getContext(), ResetParola.class));
             }
         });
 
@@ -174,8 +200,8 @@ public class ProfileFragment extends Fragment implements RecyclerViewInterface {
                     favoritePerfumeAdapter.notifyDataSetChanged();
                 }
                 if (documentSnapshot.exists()) {
-                    String username = documentSnapshot.getString("Username");
-                    tvNumeUtilizator.setText(username);
+                    //String username = documentSnapshot.getString("Username");
+                    //tvNumeUtilizator.setText(username);
                 }
             }
         });

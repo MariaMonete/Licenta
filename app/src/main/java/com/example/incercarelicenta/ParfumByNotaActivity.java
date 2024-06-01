@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.incercarelicenta.adapter.ParfumAdapter;
@@ -43,6 +46,13 @@ public class ParfumByNotaActivity extends AppCompatActivity implements RecyclerV
         recyclerView.setLayoutManager(new LinearLayoutManager(this)); // requireContext() în loc de this
         adapter = new ParfumAdapter(parfumList, this, this);
         recyclerView.setAdapter(adapter);
+        Button backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
         FirebaseFirestore.getInstance().collection("perfumes").addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -65,6 +75,15 @@ public class ParfumByNotaActivity extends AppCompatActivity implements RecyclerV
 
 
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Gestionarea acțiunilor de clic pe butonul de navigare
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // Întoarcerea la activitatea anterioară
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void filterList(String query) {

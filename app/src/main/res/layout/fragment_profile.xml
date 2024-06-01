@@ -1,4 +1,3 @@
-<!-- În fragment_profile.xml -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,7 +19,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-            <!-- Greeting cu numele utilizatorului -->
                 <TextView
                     android:id="@+id/userGreetingTextView"
                     android:layout_width="wrap_content"
@@ -31,7 +29,7 @@
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
                     android:paddingLeft="16dp"
-                    android:textColor="#3e2a82"/>
+                    android:textColor="#3e2a82" />
 
                 <TextView
                     android:id="@+id/userName"
@@ -43,7 +41,7 @@
                     android:paddingBottom="16dp"
                     android:textColor="#3e2a82" />
             </LinearLayout>
-            <!-- Lista de parfumuri favorite -->
+
             <TextView
                 android:id="@+id/favoritePerfumesTitleTextView"
                 android:layout_width="match_parent"
@@ -52,60 +50,56 @@
                 android:textColor="#3e2a82"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:padding="16dp"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/favoritePerfumesRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"/>
-
-            <!-- Lista de sugestii -->
-            <TextView
-                android:id="@+id/suggestionsTitleTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Sugestii"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:padding="16dp"
-                android:textColor="#3e2a82"/>
+                android:padding="16dp" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/suggestionsRecyclerView"
+                android:id="@+id/favoritePerfumesRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp"/>
+                android:paddingEnd="16dp" />
 
+            <Button
 
-            <!-- Butonul pentru schimbarea parolei -->
+                android:textAlignment="center"
+                android:id="@+id/tv_nume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:drawablePadding="12dp"
+                android:text="Schimbați numele de utilizator"
+                android:textColor="@color/mov"
+                 />
+
+            <Button
+                android:id="@+id/changeEmailButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Schimbați email-ul"
+                android:layout_margin="16dp" />
+
             <Button
                 android:id="@+id/changePasswordButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Schimbare parolă"
-                android:layout_margin="16dp"/>
+                android:layout_margin="16dp" />
 
-            <!-- Butonul pentru deconectare -->
             <Button
                 android:id="@+id/logoutButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Deconectare"
-                android:layout_margin="16dp"/>
+                android:layout_margin="16dp" />
 
-            <!-- Butonul pentru ștergerea contului -->
             <Button
                 android:id="@+id/deleteAccountButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Ștergere cont"
-                android:layout_margin="16dp"/>
+                android:layout_margin="16dp" />
 
         </LinearLayout>
     </ScrollView>
-
 
 </FrameLayout>

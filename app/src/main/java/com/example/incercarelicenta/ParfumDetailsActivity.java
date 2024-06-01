@@ -47,6 +47,13 @@ public class ParfumDetailsActivity extends AppCompatActivity {
         textViewParfumDescription = findViewById(R.id.textViewParfumDescription);
         textViewParfumNotes = findViewById(R.id.textViewParfumNotes);
         btnFav=findViewById(R.id.favBtn);
+        Button backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         btnFav.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,4 +196,3 @@ public class ParfumDetailsActivity extends AppCompatActivity {
 
 
 }
-

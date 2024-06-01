@@ -1,0 +1,88 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ResetParola"
+    android:orientation="vertical"
+    android:background="@color/movdeschis">
+<TextView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Schimbare parolă"
+    android:textSize="35sp"
+    android:textAlignment="center"
+    android:textStyle="bold"
+    android:textColor="@color/mov"
+    android:layout_marginTop="50dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:passwordToggleEnabled="true"
+        app:hintEnabled="false"
+        android:layout_marginTop="60dp">
+
+        <EditText
+            android:background="@color/white"
+            android:id="@+id/edit_text_current_password"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="68dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Parolă curentă"
+            android:textColor="@color/mov"
+            android:layout_marginHorizontal="12dp"
+            android:paddingStart="10dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+<com.google.android.material.textfield.TextInputLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:passwordToggleEnabled="true"
+    app:hintEnabled="false"
+    android:layout_marginTop="32dp">
+
+<EditText
+    android:id="@+id/edit_text_schimba_parola"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_marginTop="68dp"
+    android:ems="10"
+    android:inputType="textPersonName"
+    android:hint="Parolă nouă"
+    android:textColor="@color/mov"
+    android:layout_marginHorizontal="12dp"
+    android:paddingStart="10dp"/>
+</com.google.android.material.textfield.TextInputLayout>
+<com.google.android.material.textfield.TextInputLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:passwordToggleEnabled="true"
+    app:hintEnabled="false"
+    android:layout_marginTop="32dp">
+<EditText
+    android:id="@+id/edit_text_schimba_parola_confirmare"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="60dp"
+    android:layout_marginTop="68dp"
+    android:ems="10"
+    android:inputType="textPersonName"
+    android:hint="Confirmare parolă nouă"
+    android:layout_marginHorizontal="12dp"
+    android:paddingStart="10dp"
+    android:textColor="@color/mov"/>
+</com.google.android.material.textfield.TextInputLayout>
+<Button
+    android:id="@+id/buton_schimba_parola"
+    android:layout_width="210dp"
+    android:layout_height="60dp"
+    android:layout_marginTop="60dp"
+    android:text="Salvează modificări"
+    android:layout_gravity="center_horizontal"
+    android:textColor="@color/white"
+    android:background="@color/mov"/>
+    </LinearLayout>

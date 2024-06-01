@@ -134,10 +134,9 @@ public class HomeFragment extends Fragment implements RecyclerViewInterface {
     @Override
     public void onItemClick(int position) {
         Parfum clickedParfum;
-        if(filteredList.isEmpty()){
+        if (filteredList.isEmpty()) {
             clickedParfum = parfumList.get(position);
-        }
-        else{
+        } else {
             clickedParfum = filteredList.get(position);
         }
         Intent intent = new Intent(requireContext(), ParfumDetailsActivity.class);
