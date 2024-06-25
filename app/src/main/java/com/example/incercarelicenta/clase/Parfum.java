@@ -14,7 +14,7 @@ public class Parfum implements Parcelable {
     private String description;
     private String imgUrl;
     private List<String> notes;
-    private int id;
+    private int index;
     private String parfumId;
 
     public Parfum() {
@@ -32,7 +32,7 @@ public class Parfum implements Parcelable {
         description = in.readString();
         imgUrl = in.readString();
         notes = in.createStringArrayList();
-        id = in.readInt();
+        index = in.readInt();
         parfumId = in.readString();
     }
 
@@ -56,7 +56,7 @@ public class Parfum implements Parcelable {
                 ", notes=" + notes +
                 ", description='" + description + '\'' +
                 ", imageUrl='" + imgUrl + '\'' +
-                ", id='" + id + '\'' +
+                ", index='" + index + '\'' +
                 ", parfumId='" + parfumId + '\'' +
                 '}';
     }
@@ -101,12 +101,12 @@ public class Parfum implements Parcelable {
         this.notes = notes;
     }
 
-    public int getId() {
-        return id;
+    public int getIndex() {
+        return index;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public String getParfumId() {
@@ -129,7 +129,7 @@ public class Parfum implements Parcelable {
         parcel.writeString(description);
         parcel.writeString(imgUrl);
         parcel.writeStringList(notes);
-        parcel.writeInt(id);
+        parcel.writeInt(index);
         parcel.writeString(parfumId);
     }
 }

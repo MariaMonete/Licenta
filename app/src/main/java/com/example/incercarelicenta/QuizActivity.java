@@ -122,12 +122,12 @@ public class QuizActivity extends AppCompatActivity implements RecyclerViewInter
         q1.addSubcategory("Seara", List.of("Condimentat", "Lemnos", "Gurmand"));
         q1.addSubcategory("Oricând", List.of("Floral", "Lemnos", "Mosc", "Gurmand"));
 
-        List<String> answers2 = List.of("Pădure", "Pajiște cu iarbă", "Piele curată", "Pajiște cu lămâi", "Bucătărie", "Pajiște cu flori");
+        List<String> answers2 = List.of("Pădure", "Pajiște cu iarbă", "Un loc curat", "Pajiște cu lămâi", "Bucătărie", "Pajiște cu flori");
         List<Integer> images2 = List.of(R.drawable.padure, R.drawable.pajiste, R.drawable.curat, R.drawable.copaclamaie, R.drawable.bucatarie, R.drawable.floripajiste);
         Question q2 = new Question("Alege locul care miroase cel mai bine pentru tine", answers2, images2);
         q2.addSubcategory("Pădure", List.of("Piper", "Scorțișoară", "Tămâie", "Lemn santal", "Oud"));
         q2.addSubcategory("Pajiște cu iarbă", List.of("Patchouli", "Mentă", "Iarbă", "Juniper"));
-        q2.addSubcategory("Piele curată", List.of("Ambră", "Mosc alb", "Piele", "Casmir"));
+        q2.addSubcategory("Un loc curat", List.of("Ambră", "Mosc alb", "Piele", "Casmir"));
         q2.addSubcategory("Pajiște cu lămâi", List.of("Portocală", "Grapefruit", "Lămâie", "Lime"));
         q2.addSubcategory("Bucătărie", List.of("Vanilie", "Caramel", "Pralină", "Bergamotă", "Coacăze negre", "Piersică"));
         q2.addSubcategory("Pajiște cu flori", List.of("Trandafir", "Iasomie", "Lavandă", "Iris"));
@@ -203,7 +203,7 @@ public class QuizActivity extends AppCompatActivity implements RecyclerViewInter
                 return List.of(R.drawable.piper, R.drawable.scortisoara, R.drawable.tamaie, R.drawable.lemn_santal, R.drawable.oud);
             case "Pajiște cu iarbă":
                 return List.of(R.drawable.patchouli, R.drawable.menta, R.drawable.iarba, R.drawable.juniper);
-            case "Piele curată":
+            case "Un loc curat":
                 return List.of(R.drawable.ambra, R.drawable.moscalb, R.drawable.piele, R.drawable.casmir);
             case "Pajiște cu lămâi":
                 return List.of(R.drawable.portocala, R.drawable.grapefruit, R.drawable.lamaie, R.drawable.yuzu);
@@ -222,7 +222,6 @@ public class QuizActivity extends AppCompatActivity implements RecyclerViewInter
         DocumentReference userRef = db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
         String favoriteNote = answers.get(currentQuestionIndex);
 
-        // Map to translate Romanian notes to English
         Map<String, String> noteTranslations = new HashMap<>();
         noteTranslations.put("Piper", "Black Pepper");
         noteTranslations.put("Scorțișoară", "Cinnamon");
@@ -252,7 +251,6 @@ public class QuizActivity extends AppCompatActivity implements RecyclerViewInter
         noteTranslations.put("Lavandă", "Lavender");
         noteTranslations.put("Iris", "Iris");
 
-        // Get the English translation of the favorite note
         String favoriteNoteEnglish = noteTranslations.get(favoriteNote);
         userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override

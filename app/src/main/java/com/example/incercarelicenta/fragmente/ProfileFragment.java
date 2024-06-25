@@ -207,6 +207,11 @@ public class ProfileFragment extends Fragment implements RecyclerViewInterface {
         });
 
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadFavoritePerfumes();
+    }
 
     @Override
     public void onItemClick(int position) {

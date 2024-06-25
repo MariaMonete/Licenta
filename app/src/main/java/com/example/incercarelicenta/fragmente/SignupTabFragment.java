@@ -119,6 +119,7 @@ public class SignupTabFragment extends Fragment {
                    List<Parfum> lista = new ArrayList<>();
                    //lista.add(parfumTest);
                    user.put("ListaParfFav", lista);
+                   user.put("isModerator",false);
                    documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                        @Override
                        public void onSuccess(Void unused) {

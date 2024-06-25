@@ -50,7 +50,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Numele parfumului -->
             <TextView
                 android:id="@+id/textViewParfumName"
                 android:layout_width="wrap_content"
@@ -59,7 +58,6 @@
                 android:textSize="24sp"
                 android:textColor="#3e2a82"/>
 
-            <!-- Separator -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -67,7 +65,6 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"/>
 
-            <!-- Titlu pentru brandul parfumului -->
             <TextView
                 android:id="@+id/textViewParfumBrandTitle"
                 android:layout_width="wrap_content"
@@ -78,7 +75,6 @@
                 android:textColor="@color/white"
                 android:paddingTop="8dp"/>
 
-            <!-- Brandul parfumului -->
             <TextView
                 android:id="@+id/textViewParfumBrand"
                 android:layout_width="wrap_content"
@@ -88,7 +84,6 @@
                 android:textColor="#3e2a82"
                 android:paddingTop="8dp"/>
 
-            <!-- Separator -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -96,7 +91,6 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"/>
 
-            <!-- Titlu pentru descrierea parfumului -->
             <TextView
                 android:id="@+id/textViewParfumDescriptionTitle"
                 android:layout_width="wrap_content"
@@ -107,7 +101,6 @@
                 android:textColor="@color/white"
                 android:paddingTop="8dp"/>
 
-            <!-- Descrierea parfumului -->
             <TextView
                 android:id="@+id/textViewParfumDescription"
                 android:layout_width="wrap_content"
@@ -117,7 +110,6 @@
                 android:textColor="#3e2a82"
                 android:paddingTop="8dp"/>
 
-            <!-- Separator -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -125,7 +117,6 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"/>
 
-            <!-- Titlu pentru notele parfumului -->
             <TextView
                 android:id="@+id/textViewParfumNotesTitle"
                 android:layout_width="wrap_content"
@@ -136,7 +127,7 @@
                 android:textColor="@color/white"
                 android:paddingTop="8dp"/>
 
-            <!-- Notele parfumului -->
+
             <TextView
                 android:id="@+id/textViewParfumNotes"
                 android:layout_width="wrap_content"
@@ -146,7 +137,6 @@
                 android:textColor="#3e2a82"
                 android:paddingTop="8dp"/>
 
-            <!-- Separator -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -154,41 +144,42 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"/>
 
-            <!-- Titlu pentru comentarii -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Comentarii"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#3e2a82"
-                android:paddingTop="8dp"/>
-
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/commentsRecyclerView"
+                android:id="@+id/recyclerViewComments"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:paddingTop="8dp"
-                android:paddingBottom="16dp"/>
+                android:paddingBottom="8dp"
+                app:layoutManager="LinearLayoutManager"/>
 
             <EditText
-                android:id="@+id/editTextComment"
+                android:background="@color/white"
+                android:textColor="@color/mov"
+                android:id="@+id/editTextNewComment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Adaugă un comentariu"
-                android:padding="8dp"
-                android:background="@drawable/edittext_bkg"/>
+                android:layout_height="30dp"
+                android:textColorHint="@color/mov"
+                android:hint="Scrie un comentariu"
+                android:padding="5dp"/>
 
             <Button
+                android:backgroundTint="@color/mov"
+                android:backgroundTintMode="src_in"
                 android:id="@+id/buttonAddComment"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Adaugă Comentariu"
-                android:layout_gravity="end"
-                android:layout_marginTop="8dp"
-                android:background="@color/mov"
-                android:textColor="@color/white"/>
+                android:text="Adaugă comentariu"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
+
 
 </LinearLayout>

@@ -1,13 +1,13 @@
 package com.example.incercarelicenta.clase;
 
 public enum CategorieNote {
-    CITRUS,
-    FRUITY,
+    CITRAT,
+    FRUCTAT,
     FLORAL,
-    GREENNOTES,
-    SPICY,
-    GOURMAND,
-    WOODY,
-    MUSK
+    NOTE_VERZI,
+    CONDIMENTAT,
+    GURMAND,
+    LEMNOS,
+    MOSC
 
 }

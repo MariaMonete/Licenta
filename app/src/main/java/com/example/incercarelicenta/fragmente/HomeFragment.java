@@ -108,7 +108,6 @@ public class HomeFragment extends Fragment implements RecyclerViewInterface {
         return false;
     }
 
-    // Metodă de generare a unui set de date de parfumuri pentru testare
     private void EventChangeListener() {
 //        List<Parfum> generatedList = new ArrayList<>();
         db.collection("perfumes").addSnapshotListener(new EventListener<QuerySnapshot>() {

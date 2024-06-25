@@ -12,7 +12,6 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <!-- Text in the CardView -->
             <TextView android:id="@+id/child_item_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

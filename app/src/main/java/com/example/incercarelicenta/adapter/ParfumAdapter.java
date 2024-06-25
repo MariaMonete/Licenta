@@ -43,7 +43,6 @@ public class ParfumAdapter extends RecyclerView.Adapter<ParfumAdapter.ParfumView
     public void onBindViewHolder(@NonNull ParfumViewHolder holder, int position) {
         Parfum parfum = parfumList.get(position);
 
-        // Utilizați Picasso pentru a încărca imaginea din URL
         Picasso.get().load(parfum.getImgUrl()).placeholder(R.drawable.placeholder_image).into(holder.imageView);
 
         holder.textViewName.setText(parfum.getName());
