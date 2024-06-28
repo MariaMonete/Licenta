@@ -45,14 +45,12 @@ import java.util.stream.Stream;
 public class SugestiiFragment extends Fragment implements RecyclerViewInterface {
 
     private RecyclerView recommendedPerfumesRecyclerView;
-    private RecyclerView recommendedPerfumesRecyclerView1;
     private List<Parfum> recommendedPerfumesList;
-    private List<Parfum> recommendedPerfumesList1;
     private ParfumAdapter recommendedPerfumeAdapter;
-    private ParfumAdapter recommendedPerfumeAdapter1;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
     private List<Parfum> favPerfumes = new ArrayList<>();
+    private boolean dataLoaded = false;
     private TextView parfRec, parfQuiz;
 
     @Override
@@ -75,18 +73,14 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
         parfRec = view.findViewById(R.id.parfRec);
         parfQuiz = view.findViewById(R.id.parfQuiz);
         recommendedPerfumesRecyclerView = view.findViewById(R.id.recommendedPerfumesRecyclerView);
-        recommendedPerfumesRecyclerView1 = view.findViewById(R.id.recommendedPerfumesRecyclerView1);
 
         recommendedPerfumesList = new ArrayList<>();
-        recommendedPerfumesList1 = new ArrayList<>();
         recommendedPerfumeAdapter = new ParfumAdapter(recommendedPerfumesList, requireContext(), this);
-        recommendedPerfumeAdapter1 = new ParfumAdapter(recommendedPerfumesList1, requireContext(), this);
 
         recommendedPerfumesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recommendedPerfumesRecyclerView.setAdapter(recommendedPerfumeAdapter);
-        recommendedPerfumesRecyclerView1.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recommendedPerfumesRecyclerView1.setAdapter(recommendedPerfumeAdapter1);
-
+        recommendedPerfumesList.clear();
+        recommendedPerfumeAdapter.notifyDataSetChanged();
         loadFavoritePerfumesAndRecommendPerfumes();
         return view;
     }
@@ -117,6 +111,8 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
     }
 
     private void loadFavoriteNotesAndRecommendPerfumes() {
+        recommendedPerfumesList.clear();
+        recommendedPerfumeAdapter.notifyDataSetChanged();
         DocumentReference userRef = db.collection("users").document(auth.getCurrentUser().getUid());
         userRef.get().addOnSuccessListener(documentSnapshot -> {
             com.example.incercarelicenta.clase.User user = documentSnapshot.toObject(com.example.incercarelicenta.clase.User.class);
@@ -131,6 +127,8 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
     }
 
     private void loadFavoritePerfumesAndRecommendPerfumes() {
+        recommendedPerfumesList.clear();
+        recommendedPerfumeAdapter.notifyDataSetChanged();
         Toast.makeText(getContext(), "Încărcare parfumuri recomandate...", Toast.LENGTH_SHORT).show();
         DocumentReference userRef = db.collection("users").document(auth.getCurrentUser().getUid());
         userRef.get().addOnSuccessListener(documentSnapshot -> {
@@ -145,11 +143,16 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
                 showFavoritePerfumes();
             } else {
                 Log.d("SugestiiFragment", "No favorite perfumes found. Loading quiz recommendations.");
+                recommendedPerfumesList.clear();
+                recommendedPerfumeAdapter.notifyDataSetChanged();
                 loadFavoriteNotesAndRecommendPerfumes();
                 showQuizRecommendations();
             }
+            dataLoaded = true;
         }).addOnFailureListener(e -> {
             Log.e("SugestiiFragment", "Failed to load user's favorite perfumes", e);
+            recommendedPerfumesList.clear();
+            recommendedPerfumeAdapter.notifyDataSetChanged();
             loadFavoriteNotesAndRecommendPerfumes();
             showQuizRecommendations();
         });
@@ -173,6 +176,7 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
 
     private void fetchRecommendedPerfumes(List<String> favoriteNotes) {
         recommendedPerfumesList.clear();
+        recommendedPerfumeAdapter.notifyDataSetChanged();
         Set<String> processedPerfumeIds = new HashSet<>();
 
         for (String note : favoriteNotes) {
@@ -200,6 +204,8 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
     }
 
     private void fetchRecommendedPerfumesFromPython(List<String> favoriteNotes, Set<String> favoriteNames) {
+        recommendedPerfumesList.clear();
+        recommendedPerfumeAdapter.notifyDataSetChanged();
         try {
             Python py = Python.getInstance();
             PyObject pyobj = py.getModule("recommendations");
@@ -222,7 +228,7 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
 
             Log.d("SugestiiFragment", "Python recommended indices: " + recommendedIndices);
 
-            recommendedPerfumesList1.clear();
+            recommendedPerfumesList.clear();
             Set<String> processedPerfumeIds = new HashSet<>();
 
             for (int index : recommendedIndices) {
@@ -232,13 +238,13 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
                                 for (DocumentSnapshot document : task.getResult()) {
                                     Parfum parfum = document.toObject(Parfum.class);
                                     if (parfum != null && !processedPerfumeIds.contains(parfum.getName()) && !favoriteNames.contains(parfum.getName())) {
-                                        recommendedPerfumesList1.add(parfum);
+                                        recommendedPerfumesList.add(parfum);
                                         processedPerfumeIds.add(parfum.getName());
                                     }
                                 }
 
-                                recommendedPerfumeAdapter1.notifyDataSetChanged();
-                                Log.d("SugestiiFragment", "Python Recommended Perfumes: " + recommendedPerfumesList1.size());
+                                recommendedPerfumeAdapter.notifyDataSetChanged();
+                                Log.d("SugestiiFragment", "Python Recommended Perfumes: " + recommendedPerfumesList.size());
                             } else {
                                 Log.d("SugestiiFragment", "Failed to fetch Python recommendations.");
                             }
@@ -252,15 +258,11 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
     }
 
     private void showFavoritePerfumes() {
-        recommendedPerfumesRecyclerView1.setVisibility(View.VISIBLE);
-        recommendedPerfumesRecyclerView.setVisibility(View.GONE);
         parfQuiz.setVisibility(View.GONE);
         parfRec.setVisibility(View.VISIBLE);
     }
 
     private void showQuizRecommendations() {
-        recommendedPerfumesRecyclerView1.setVisibility(View.GONE);
-        recommendedPerfumesRecyclerView.setVisibility(View.VISIBLE);
         parfRec.setVisibility(View.GONE);
         parfQuiz.setVisibility(View.VISIBLE);
     }
@@ -272,22 +274,23 @@ public class SugestiiFragment extends Fragment implements RecyclerViewInterface 
         return text.toLowerCase();
     }
 
-    @Override
-    public void onResume() {
-        loadFavoritePerfumesAndRecommendPerfumes();
-        loadFavoriteNotesAndRecommendPerfumes();
-        super.onResume();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if (!dataLoaded) {
+//            loadFavoritePerfumesAndRecommendPerfumes();
+//        }
+//    }
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        dataLoaded = false;
+//    }
+
 
     @Override
     public void onItemClick(int position) {
-        Parfum clickedParfum;
-        if (!favPerfumes.isEmpty()) {
-            clickedParfum = recommendedPerfumesList1.get(position);
-        } else {
-            clickedParfum = recommendedPerfumesList.get(position);
-        }
-
+        Parfum clickedParfum=recommendedPerfumesList.get(position);
         if (clickedParfum != null) {
             Intent intent = new Intent(requireContext(), ParfumDetailsActivity.class);
             Bundle bundle = new Bundle();

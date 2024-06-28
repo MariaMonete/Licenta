@@ -37,7 +37,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class ParfumDetailsActivity extends AppCompatActivity {
-
     private ImageView imageViewParfum;
     private TextView textViewParfumName, textViewParfumBrand, textViewParfumDescription, textViewParfumNotes;
     private ImageButton btnFav;
@@ -109,7 +108,8 @@ public class ParfumDetailsActivity extends AppCompatActivity {
                 numeParfum = parfum.getName();
                 parfumId = parfum.getIndex();
                 Log.d("ParfumDetailsActivity", "Parfum ID: " + parfumId);
-                checkIfUserIsModerator();
+
+                loadComments();
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 DocumentReference userRef = db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -127,6 +127,7 @@ public class ParfumDetailsActivity extends AppCompatActivity {
                         }
                     }
                 });
+                loadComments();
                 Glide.with(this).load(parfum.getImgUrl()).into(imageViewParfum);
                 textViewParfumName.setText(parfum.getName());
                 textViewParfumBrand.setText(parfum.getBrand());
@@ -137,6 +138,10 @@ public class ParfumDetailsActivity extends AppCompatActivity {
                     notesStringBuilder.append("- ").append(note).append("\n");
                 }
                 textViewParfumNotes.setText(notesStringBuilder.toString());
+
+                checkIfUserIsModerator();
+
+
             }
         }
     }
@@ -147,12 +152,27 @@ public class ParfumDetailsActivity extends AppCompatActivity {
         userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                User user = documentSnapshot.toObject(User.class);
-                if (user != null) {
-                    isModerator = user.isModerator();
+                if (documentSnapshot.exists()) {
+                    Boolean moderator = documentSnapshot.getBoolean("moderator");
+                    isModerator = moderator != null && moderator;
+                    setupCommentsAdapter(); // Initialize adapter again with updated isModerator
                 }
             }
         });
+    }
+    private void setupCommentsAdapter() {
+        commentsAdapter = new CommentsAdapter(commentList, currentUserId, isModerator, new CommentsAdapter.OnCommentClickListener() {
+            @Override
+            public void onEditClick(Comment comment) {
+                showEditCommentDialog(comment);
+            }
+
+            @Override
+            public void onDeleteClick(Comment comment) {
+                deleteComment(comment);
+            }
+        });
+        recyclerViewComments.setAdapter(commentsAdapter);
     }
 
     private void loadComments() {

@@ -44,7 +44,6 @@ public class ParfumAdapter extends RecyclerView.Adapter<ParfumAdapter.ParfumView
         Parfum parfum = parfumList.get(position);
 
         Picasso.get().load(parfum.getImgUrl()).placeholder(R.drawable.placeholder_image).into(holder.imageView);
-
         holder.textViewName.setText(parfum.getName());
         holder.textViewBrand.setText(parfum.getBrand());
     }
